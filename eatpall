@@ -1,0 +1,268 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 28, 2025 at 07:27 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `eatpall`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `about`
+--
+
+CREATE TABLE `about` (
+  `id` int(11) NOT NULL,
+  `judul` varchar(200) NOT NULL,
+  `deskripsi` text NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `admin_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `about`
+--
+
+INSERT INTO `about` (`id`, `judul`, `deskripsi`, `updated_at`, `admin_id`) VALUES
+(1, 'Tentang EATPALL', 'EATPALL adalah Sistem Informasi Geografis yang memetakan rumah makan, cafe, dan restoran di Kota Palu. \n Aplikasi ini dikembangkan dengan PHP, MySQL, dan Leaflet (OpenStreetMap) untuk memudahkan masyarakat mencari lokasi kuliner.', '2025-10-04 08:58:29', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id`, `username`, `password`, `email`, `full_name`, `created_at`) VALUES
+(1, 'admin1', 'dimas55', 'admin1@gmail.com', 'Admin Satu', '2025-10-03 14:27:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `pesan` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `subject` varchar(255) DEFAULT '',
+  `user_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lokasi`
+--
+
+CREATE TABLE `lokasi` (
+  `id` int(11) NOT NULL,
+  `nama_tempat` varchar(255) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `kategori` varchar(100) DEFAULT NULL,
+  `url_foto` varchar(255) DEFAULT NULL,
+  `jam_operasional` varchar(50) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lokasi`
+--
+
+INSERT INTO `lokasi` (`id`, `nama_tempat`, `latitude`, `longitude`, `keterangan`, `kategori`, `url_foto`, `jam_operasional`, `user_id`, `admin_id`) VALUES
+(1, 'RM Sidrap', -0.8878119, 119.8712785, 'Jl. Sam Ratulangi, Besusu Baru, Palu Timur', 'Rumah Makan', 'foto1.jpg', '08:00 - 22:00', NULL, NULL),
+(2, 'Foodie Cafe & Resto', -0.8980365, 119.8714359, 'Jl. Sultan Hasanuddin, North Lolu, Palu Selatan', 'Cafe & Resto', 'foto2.jpg', '10:00 - 23:00', NULL, NULL),
+(3, 'Warung Makan Khas Kaili', -0.8868508, 119.8540591, 'Jl. Tembang No. 23, Lere, Palu Barat', 'Rumah Makan', 'foto3.png', '07:00 - 21:00', NULL, NULL),
+(4, 'Rumah Makan Darisa', -0.8848464, 119.8790648, 'Jl. Setia Budi, Talise, Mantikulore, Palu', 'Rumah Makan', 'foto4.jpg', '09:00 - 20:00', NULL, NULL),
+(5, 'Kaledo Stereo', -0.8827598, 119.8411226, 'Jl. Diponegoro No. 40, Palu Barat', 'Rumah Makan', 'foto5.png', '11:00 - 22:00', NULL, NULL),
+(6, 'Rumah Makan khas Kaili', -0.8850274, 119.8360129, 'Jl. Munif Rahman 1 No.9 B, Kabonena, Kec. Ulujadi, Kota Palu, Sulawesi Tengah 94227', 'Rumah Makan', 'foto6.png', '08:00 - 21:00', NULL, NULL),
+(7, 'Pizza Hut Palu', -0.9095164, 119.8758758, 'Jl. Emmy Saelan No. 17, South Lolu, Palu Selatan', 'Restoran', 'foto7.jpg', '10:00 - 00:00', NULL, NULL),
+(8, 'MJM Seafood', -0.8930221, 119.8777974, 'Besusu Tengah, Palu Timur, Palu', 'Rumah Makan', 'foto8.jpg', '12:00 - 23:00', NULL, NULL),
+(9, 'Warung Mas Aziz 2', -0.9078653, 119.8987264, 'Jl. Garuda, Birobuli Utara, Palu Selatan', 'Rumah Makan', 'foto9.png', '09:00 - 22:00', NULL, NULL),
+(10, 'Warung Makan Tinombala Monginsidi', -0.8998005, 119.8747196, 'South Lolu, Palu Selatan', 'Warung Makan', 'foto10.png', '08:00 - 20:00', NULL, NULL),
+(11, 'RM. Raja Kuring', -0.8979044, 119.8725486, 'Jl. Sultan Hasanuddin No.35, Lolu Utara, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94112', 'Rumah Makan', 'foto11.jpg', '07:00 - 21:00', NULL, NULL),
+(12, 'Sate Madura BANG SELOR', -0.8978772, 119.851624, 'Jl. WR. Supratman, Kamonji, Kec. Palu Bar., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto12.png', '17:00 - 23:00', NULL, NULL),
+(13, 'Rumah Makan Tenda Biru', -0.9061854, 119.862619, 'Jl. Jati No.21, Nunu, Kec. Palu Bar., Kota Palu, Sulawesi Tengah 94111', 'Rumah Makan', 'foto13.png', '08:00 - 22:00', NULL, NULL),
+(14, 'Warung Makan R.R Zebra', -0.9252951, 119.8844926, 'Jl. Zebra, Tatura Sel., Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94235', 'Warung Makan', 'foto14.png', '10:00 - 21:00', NULL, NULL),
+(15, 'Warung Makan Lestari', -0.8927103, 119.8730724, 'Jl. Cik Ditiro, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto15.jpg', '09:00 - 20:00', NULL, NULL),
+(16, 'Rumah Makan Sari Laut Mas Joko', -0.8854907, 119.8675615, 'Jl. DR. Suharso No.3, Besusu Bar., Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94118', 'Rumah Makan', 'foto16.png', '11:00 - 23:00', NULL, NULL),
+(17, 'Warung Makan Mandalika', -0.9066829, 119.8763819, 'Jl. Tanjung Karang No.10, Lolu Sel., Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto17.png', '08:00 - 22:00', NULL, NULL),
+(18, 'Warung Soto Banjar Hj. Norma', -0.8994231, 119.8597535, 'Jl. Danau Poso, Siranindi, Kec. Palu Bar., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto18.png', '07:00 - 21:00', NULL, NULL),
+(19, 'Rumah Makan Pangkep Padaidi', -0.912331, 119.8559163, 'Jl. Pue Bongo No.26, Boyaoge, Kec. Tatanga, Kota Palu, Sulawesi Tengah 94221', 'Rumah Makan', 'foto19.png', '10:00 - 20:00', NULL, NULL),
+(20, 'kalora Cafe & Resto', -0.8702589, 119.8186836, 'Silae, Kec. Ulujadi, Kota Palu, Sulawesi Tengah 94227', 'Cafe & Resto', 'foto20.png', '09:00 - 23:00', NULL, NULL),
+(21, 'Wizzmie Palu', -0.8931421, 119.8731449, 'Jl. Chairil Anwar No.6, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94111', 'Rumah Makan', 'foto21.png', '08:00 - 22:00', NULL, NULL),
+(22, 'Restoran Kopitiam Uncle Han', -0.8943315, 119.8732625, 'Jl. Chairil Anwar No.7, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94111', 'Restoran', 'foto22.jpg', '10:00 - 00:00', NULL, NULL),
+(23, 'Warung Emy Saelan', -0.916807, 119.8766756, 'Tatura Sel., Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto23.jpg', '11:00 - 21:00', NULL, NULL),
+(24, 'RM. Ikan Bakar Sulawesi', -0.8974626, 119.8707801, 'Jl. Sultan Hasanuddin, Lolu Utara, Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94111', 'Rumah Makan', 'foto24.png', '12:00 - 23:00', NULL, NULL),
+(25, 'Mouza Caffe Palu', -0.8489417, 119.8824075, 'Jl. RE Martadinata No.Kelurahan, Tondo, Kec. Mantikulore, Kota Palu, Sulawesi Tengah 94119', 'Cafe', 'foto25.png', '08:00 - 22:00', NULL, NULL),
+(26, 'Koppi Palu', -0.9004046, 119.8586201, 'Jl. Sis Aljufri No.44, Siranindi, Kec. Palu Bar., Kota Palu, Sulawesi Tengah 94111', 'Cafe', 'foto26.png', '09:00 - 21:00', NULL, NULL),
+(27, 'Sin Coffee 2, Sudirman', -0.892587, 119.870241, 'Jl. Sudirman No.01, Besusu Bar., Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94111', 'Cafe', 'foto27.png', '07:00 - 20:00', NULL, NULL),
+(28, 'Sin Coffee 10, Santigi', -0.9035773, 119.8756349, 'Jl. Tj. Santigi No.16, Lolu Sel., Kec. Palu Sel., Kota Palu, Sulawesi Tengah 94111', 'Cafe', 'foto28.png', '10:00 - 23:00', NULL, NULL),
+(29, 'Warung Barokah', -0.9058495, 119.8633571, 'Jl. Sungai Lariang, Nunu, Kec. Palu Bar., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto29.png', '08:00 - 22:00', NULL, NULL),
+(30, 'Warung Sedap Malam', -0.8946273, 119.8737416, 'Jl. Sedap Malam No.7, Besusu Tengah, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94111', 'Warung Makan', 'foto30.png', '17:00 - 02:00', NULL, NULL),
+(31, 'Chickenbim Bananabim', -0.833099, 119.888539, 'Jl. Soekarno Hatta,Tondo, Kec. Mantikulore, Kota Palu, Sulawesi Tengah 94148', 'Rumah Makan', 'foto31.png', '09:00 - 22:00', NULL, NULL),
+(32, 'WARUNG KOPI MODERN', -0.832132, 119.883017, 'Jl. Trans Sulawesi 203,Tondo, Kec. Palu Tim., Kota Palu, Sulawesi Tengah 94148', 'Cafe', 'foto32.png', '15:00 - 24:00', NULL, NULL),
+(34, 'Mie Gacoan Palu RE Martadinata', -0.847937, 119.882728, 'Jl. RE Martadinata, Tondo, Kec. Mantikulore, Kota Palu, Sulawesi Tengah 94148', 'Restoran', 'foto33.png', '08:00 - 23:30', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `role` varchar(50) NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `full_name`, `created_at`, `role`) VALUES
+(1, 'user1', 'dimas55', 'user1@gmail.com', 'User Satu', '2025-10-03 14:28:34', 'user'),
+(2, 'user2', 'dimaas55', 'user2@gmail.com', 'User Dua', '2025-10-03 14:28:34', 'user'),
+(17, 'abdul', '82027888c5bb8fc395411cb6804a066c', '', NULL, '2025-10-13 13:57:19', 'user'),
+(18, 'atila', 'aefff3507830833ab23ef3ec06dd05a3', '', NULL, '2025-10-15 14:55:21', 'user');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `about`
+--
+ALTER TABLE `about`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `admin_id` (`admin_id`);
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `admin_id` (`admin_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `about`
+--
+ALTER TABLE `about`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `about`
+--
+ALTER TABLE `about`
+  ADD CONSTRAINT `about_ibfk_1` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`),
+  ADD CONSTRAINT `about_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
+
+--
+-- Constraints for table `contact`
+--
+ALTER TABLE `contact`
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `lokasi`
+--
+ALTER TABLE `lokasi`
+  ADD CONSTRAINT `lokasi_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `lokasi_ibfk_2` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
